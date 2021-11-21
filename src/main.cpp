@@ -3,8 +3,8 @@
 #include <ArduinoWebsockets.h>
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
-#include <TB6612_ESP32.h>
-
+//#include <TB6612_ESP32.h>
+#include "analogWrite.h"
 #include "config.h"
 #include "web.h"
 
@@ -25,7 +25,7 @@
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   // Create AP
   WiFi.softAP(ssid, password);
@@ -53,8 +53,12 @@ void handle_message(WebsocketsMessage msg) {
   commaIndex = msg.data().indexOf(',');
   LValue = msg.data().substring(0, commaIndex).toInt();
   RValue = msg.data().substring(commaIndex + 1).toInt();
-  motor1.drive(LValue);
-  motor2.drive(RValue);
+
+   M1_Speed = ( -RValue + LValue) ;
+    M2_Speed = (RValue + LValue) ;
+    M3_Speed = ( RValue + LValue) ;
+    M4_Speed = ( -RValue + LValue) ;
+  Set_PWM(M1_Speed, M2_Speed, M3_Speed, M4_Speed);
 }
  
 void loop()

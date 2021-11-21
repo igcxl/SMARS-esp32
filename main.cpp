@@ -37,7 +37,7 @@ class MyServerCallbacks: public BLEServerCallbacks {
       deviceConnected = true;
     };
 
-    void onDisconnect(BLEServer* pServer) {
+    void onDisconnect(BLEServer* pServer) { 
       deviceConnected = false;
     }
 };
