@@ -1,27 +1,11 @@
 #include <Arduino.h>
-#include "Arduino.h"
 #include <ArduinoWebsockets.h>
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
-//#include <TB6612_ESP32.h>
 #include "analogWrite.h"
 #include "config.h"
 #include "web.h"
 
-/** ESP32 robot tank with wifi and one joystick web control sketch. 
-    Based on SMARS modular robot project using esp32 and tb6612.
-    https://www.thingiverse.com/thing:2662828
-
-    for complete complete program: https://github.com/nkmakes/SMARS-esp32
-
-    Made by nkmakes.github.io, August 2020.
-
-    -----------------------------------------
-    Camera stream based upon:
-    Based on Neil Kolban example for IDF: https://github.com/nkolban/esp32-snippets/blob/master/cpp_utils/tests/BLE%20Tests/SampleNotify.cpp
-    Ported to Arduino ESP32 by Evandro Copercini
-    Adapted by Manos Zeakis for ESP32 and TB6612FNG
-*/
 
 void setup()
 {
@@ -51,13 +35,13 @@ void setup()
 // handle http messages
 void handle_message(WebsocketsMessage msg) {
   commaIndex = msg.data().indexOf(',');
-  LValue = msg.data().substring(0, commaIndex).toInt();
-  RValue = msg.data().substring(commaIndex + 1).toInt();
+  LRValue = msg.data().substring(0, commaIndex).toInt();
+  FBValue  = msg.data().substring(commaIndex + 1).toInt();
 
-   M1_Speed = ( -RValue + LValue) ;
-    M2_Speed = (RValue + LValue) ;
-    M3_Speed = ( RValue + LValue) ;
-    M4_Speed = ( -RValue + LValue) ;
+   M1_Speed = ( LRValue + FBValue) ;
+    M2_Speed = (-LRValue + FBValue) ;
+    M3_Speed = ( -LRValue + FBValue) ;
+    M4_Speed = ( LRValue + FBValue) ;
   Set_PWM(M1_Speed, M2_Speed, M3_Speed, M4_Speed);
 }
  

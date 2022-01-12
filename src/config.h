@@ -11,7 +11,7 @@ const char* password = "1234qwer"; //Enter Password
 #define BIN2 26  // B电机控制PWM波
 
 #define CIN1 27  // C电机控制PWM波
-#define CIN2 26  //14 v1 // C电机控制PWM波//该端口重启时会输出高电平 需更换
+#define CIN2 4  //14 v1 // C电机控制PWM波//该端口重启时会输出高电平 需更换
 
 #define DIN1 13  // D电机控制PWM波
 #define DIN2 12  // D电机控制PWM波
@@ -79,4 +79,4 @@ using namespace websockets;
 WebsocketsServer server;
 AsyncWebServer webserver(80);
 
-int LValue, RValue, commaIndex;
+int FBValue, LRValue, commaIndex;
